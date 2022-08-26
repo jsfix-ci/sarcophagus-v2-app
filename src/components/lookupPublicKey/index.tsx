@@ -1,4 +1,4 @@
-import { VStack, Heading, Input, FormLabel, Button, Text } from '@chakra-ui/react';
+import { VStack, Heading, Input, FormLabel, Button, Text, FormControl } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useLookupPublicKey, LookupPublicKeyStatus } from './useLookupPublicKey';
 
@@ -15,31 +15,32 @@ const LookupPublicKeyStatusMessageMap = new Map([
 
 export function LookupPublicKey() {
   const [address, setAddress] = useState('');
-  const [publicKey, setPublicKey] = useState('');
 
-  const { lookupPublicKey, lookupStatus } = useLookupPublicKey();
+  const { lookupPublicKey, lookupStatus, publicKey, isLoading } = useLookupPublicKey();
 
   async function handleOnClick(): Promise<void> {
-    const pk = await lookupPublicKey(address);
-    setPublicKey(pk || 'not found');
+    await lookupPublicKey(address);
   }
 
   return (
     <VStack align="left">
       <Heading>Lookup Public Key</Heading>
-      <FormLabel>Etherum Address</FormLabel>
-      <Input
-        placeholder="0x0..."
-        onChange={e => setAddress(e.currentTarget.value)}
-        value={address}
-      />
-      <Button
-        background="gray"
-        width={20}
-        onClick={handleOnClick}
-      >
-        Submit
-      </Button>
+      <FormControl isDisabled={!isLoading}>
+        <FormLabel>Etherum Address</FormLabel>
+        <Input
+          placeholder="0x0..."
+          onChange={e => setAddress(e.currentTarget.value)}
+          value={address}
+        />
+        <Button
+          background="gray"
+          width={20}
+          onClick={handleOnClick}
+          isLoading={isLoading}
+        >
+          Submit
+        </Button>
+      </FormControl>
       <Text>Status:{LookupPublicKeyStatusMessageMap.get(lookupStatus)}</Text>
       <Text>Public Key:{publicKey}</Text>
     </VStack>
