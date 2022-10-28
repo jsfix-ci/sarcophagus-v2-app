@@ -10,6 +10,7 @@ import {
   Text,
   VStack,
   HStack,
+  Flex,
 } from '@chakra-ui/react';
 import { useBundlr } from 'features/embalm/stepContent/hooks/useBundlr';
 import { useUploadPrice } from 'features/embalm/stepNavigator/hooks/useUploadPrice';
@@ -80,6 +81,16 @@ export function Bundlr({ children }: { children?: React.ReactNode }) {
                   <NumberIncrementStepper />
                   <NumberDecrementStepper />
                 </NumberInputStepper>
+
+                <Text
+                  p="2.5"
+                  font-weight="900"
+                  position="absolute"
+                  right="7"
+                  top="0"
+                >
+                  ETH
+                </Text>
               </NumberInput>
               <Button
                 float="right"
@@ -114,10 +125,8 @@ export function Bundlr({ children }: { children?: React.ReactNode }) {
               </Button>
             </HStack>
             <Text variant="secondary">Bundlr balance: {formattedBalance}</Text>
-            {formattedUploadPrice > ONE_WEI ? (
+            {formattedUploadPrice > ONE_WEI && (
               <Text variant="secondary">Estimated payload price: {formattedUploadPrice}</Text>
-            ) : (
-              ''
             )}
           </VStack>
         </VStack>
