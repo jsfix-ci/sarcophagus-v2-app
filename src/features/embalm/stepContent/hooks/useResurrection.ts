@@ -60,7 +60,9 @@ export function useResurrection() {
       }
     } else {
       if (customResurrectionDate) {
-        dispatch(setResurrection(customResurrectionDate.getTime()));
+        const myDate = Date.now() + 180 * 1000;
+        // dispatch(setResurrection(customResurrectionDate.getTime()));
+        dispatch(setResurrection(myDate));
       }
     }
   }, [dispatch, radioValue, customResurrectionDate]);
