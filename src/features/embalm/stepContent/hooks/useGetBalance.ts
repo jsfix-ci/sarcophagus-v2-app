@@ -4,6 +4,7 @@ import { setBalance, setPendingBalance } from 'store/bundlr/actions';
 import { useDispatch, useSelector } from 'store/index';
 import { useNetwork } from 'wagmi';
 import { useBundlr } from './useBundlr';
+import { BigNumber } from 'ethers';
 
 export function useGetBalance() {
   const dispatch = useDispatch();
@@ -47,10 +48,9 @@ export function useGetBalance() {
     const queryBalance = async () => {
       try {
         const newBalance = await getBalance();
-        console.log('querying balance');
         // If our new balance is different than current, then funding is complete
         // update the new balance and clear out our interval
-        if (newBalance !== balance) {
+        if (BigNumber.from(newBalance).gt(pendingBalance.balanceBeforeFund || 0)) {
           console.log('balance is being updated due to funding completion');
           dispatch(
             setPendingBalance({
