@@ -79,6 +79,16 @@ export function Bundlr({ children }: { children?: React.ReactNode }) {
                 <NumberInputStepper>
                   <NumberIncrementStepper />
                   <NumberDecrementStepper />
+
+                  <Text
+                    p="2.5"
+                    font-weight="900"
+                    position="absolute"
+                    right="7"
+                    top="0"
+                  >
+                    ETH
+                  </Text>
                 </NumberInputStepper>
               </NumberInput>
               <Button
