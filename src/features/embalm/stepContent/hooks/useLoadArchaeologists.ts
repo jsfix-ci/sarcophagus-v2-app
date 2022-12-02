@@ -43,21 +43,23 @@ export function useLoadArchaeologists() {
           args: [addresses],
         })) as any[]; // TODO: Update ABI packages to export const JSON objects instead, then remove these any[]s so wagmi can infer types
 
-        const stats = (await readContract({
-          address: networkConfig.diamondDeployAddress,
-          abi: ViewStateFacet__factory.abi,
-          functionName: 'getArchaeologistsStatistics',
-          args: [addresses],
-        })) as any[];
+        // const stats = (await readContract({
+        //   address: networkConfig.diamondDeployAddress,
+        //   abi: ViewStateFacet__factory.abi,
+        //   functionName: 'getArchaeologistsStatistics',
+        //   args: [addresses],
+        // })) as any[];
 
         const newArchaeologists = profiles.map((p, i) => ({
           profile: {
             ...p,
             archAddress: addresses[i],
-            successes: stats[i].successes,
-            cleanups: stats[i].cleanups,
-            accusals: stats[i].accusals,
-            failures: stats[i].failures,
+            successes: 0,
+            cleanups: 0,
+            accusals: 0,
+            // successes: stats[i].successes,
+            // cleanups: stats[i].cleanups,
+            // accusals: stats[i].accusals,
           },
           isOnline: false,
         }));
